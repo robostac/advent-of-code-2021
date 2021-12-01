@@ -24,9 +24,14 @@ fn increases(a: &Vec<i64>) -> usize {
 }
 
 fn sliding_window(a: &Vec<i64>, w_size: usize) -> Vec<i64> {
-    ((w_size - 1)..a.len())
-        .map(|x| a[x] + a[x - 1] + a[x - 2])
-        .collect()
+    let mut sum = a[..w_size].iter().sum();
+    let mut v = vec![sum];
+    for (p, x) in a.iter().enumerate().skip(w_size) {
+        sum += x;
+        sum -= a[p - w_size];
+        v.push(sum);
+    }
+    v
 }
 
 fn main() {
